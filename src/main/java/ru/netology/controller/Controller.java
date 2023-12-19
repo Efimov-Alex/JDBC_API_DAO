@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ru.netology.repository.Reposiroty;
+import ru.netology.repository.Repos;
+
 
 import java.util.List;
 
@@ -13,24 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class Controller {
-
     @Autowired
-    Reposiroty reposiroty;
+    Repos reposiroty;
 
     @GetMapping("/fetch-product")
-    public ResponseEntity<List<String>> findByName(@RequestParam(value = "name", required = false) String name) {
-        try {
-            List<String> names = reposiroty.getProductName(name);
-
-
-
-            if (names.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(names, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    protected List<String> getProductName(@RequestParam (value = "name", required = false) String name) {
+        return reposiroty.getProductName(name);
     }
 }
 
